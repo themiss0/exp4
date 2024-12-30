@@ -59,7 +59,7 @@ border-radius:25px;
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -118,7 +118,7 @@ border-radius:25px;
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QLineEdit" name="lineEdit">
+              <widget class="QLineEdit" name="urlEdit">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -128,7 +128,7 @@ border-radius:25px;
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QLineEdit" name="lineEdit_2">
+              <widget class="QLineEdit" name="nameEdit">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -153,9 +153,9 @@ border-radius:25px;
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="loginButton">
              <property name="text">
-              <string>PushButton</string>
+              <string>登录</string>
              </property>
             </widget>
            </item>
@@ -195,7 +195,11 @@ border-radius:25px;
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QTextEdit" name="textEdit"/>
+           <widget class="QTextEdit" name="textEdit">
+            <property name="documentTitle">
+             <string>聊天室客户端</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QListWidget" name="listWidget">
@@ -218,7 +222,7 @@ border-radius:25px;
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLineEdit" name="lineEdit_3"/>
+           <widget class="QLineEdit" name="messageEdit"/>
           </item>
           <item>
            <widget class="QPushButton" name="sendButton">
