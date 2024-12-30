@@ -12,3 +12,21 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_sayButton_clicked()
+{
+
+}
+
+
+void MainWindow::on_logoutButton_clicked()
+{
+    ui->root->setCurrentIndex(0);
+}
+
+
+void MainWindow::on_loginButton_clicked()
+{
+    ui->root->setCurrentIndex(1);
+}
+

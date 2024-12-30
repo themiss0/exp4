@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>651</width>
-    <height>392</height>
+    <width>693</width>
+    <height>501</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <string notr="true">#titleLabel{
 background:white;
 color:blue;
-fong-size:20px;
+font-size:20px;
 border:none;
 border-bottom:1px solid black;
 padding:5px;
@@ -57,9 +57,9 @@ border-radius:25px;
      </widget>
     </item>
     <item>
-     <widget class="QStackedWidget" name="stackedWidget">
+     <widget class="QStackedWidget" name="root">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="loginPage">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -195,14 +195,14 @@ border-radius:25px;
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QTextEdit" name="textEdit">
+           <widget class="QTextEdit" name="roomTextEdit">
             <property name="documentTitle">
              <string>聊天室客户端</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="listWidget">
+           <widget class="QListWidget" name="userList">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -222,10 +222,10 @@ border-radius:25px;
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLineEdit" name="messageEdit"/>
+           <widget class="QLineEdit" name="sayLineEdit"/>
           </item>
           <item>
-           <widget class="QPushButton" name="sendButton">
+           <widget class="QPushButton" name="sayButton">
             <property name="text">
              <string>发送</string>
             </property>
