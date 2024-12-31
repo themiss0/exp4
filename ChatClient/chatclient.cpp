@@ -8,9 +8,14 @@ ChatClient::ChatClient(QObject *parent)
 {
     m_clientSocket = new QTcpSocket(this);
 
-
     connect(m_clientSocket, &QTcpSocket::connected, this, &ChatClient::connected);
     connect(m_clientSocket, &QTcpSocket::readyRead, this, &ChatClient::onReadyRead);
+
+}
+ChatClient::~ChatClient(){
+    if(m_clientSocket != nullptr)
+        m_clientSocket->close();
+    delete m_clientSocket;
 }
 
 void ChatClient::onReadyRead()
@@ -23,8 +28,14 @@ void ChatClient::onReadyRead()
         socketStream.startTransaction();
         socketStream >> jsonData;
         if(socketStream.commitTransaction()){
-            emit messageReceived(QString::fromUtf8((jsonData)));
+            // emit messageReceived(QString::fromUtf8((jsonData)));
             //在这里向界面打印输出
+
+            QJsonParseError parseError;
+            const QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &parseError);
+            if(jsonDoc.isObject()){
+                emit jsonReceived(jsonDoc.object());
+            }
         }else{
             break;
         }
@@ -50,7 +61,7 @@ void ChatClient::sendMessage(const QString &text, const QString &type)
     }
 }
 
-void ChatClient::connectToServer(const QHostAddress &address, quint16 port)
+void ChatClient::connectToServer(const QString &name, const QHostAddress &address, quint16 port)
 {
     try{
         m_clientSocket->connectToHost(address, port);

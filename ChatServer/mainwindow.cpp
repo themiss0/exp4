@@ -37,6 +37,6 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::logMessage(const QString &message)
 {
-    ui->logEdit->appendPlainText(message);
+    ui->logEdit->appendPlainText("log" + message);
 }
 

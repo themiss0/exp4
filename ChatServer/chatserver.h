@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QTcpServer>
 #include "serverworker.h"
+#include <QJsonObject>
+#include <QJsonValue>
 
 class ChatServer : public QTcpServer
 {
@@ -13,13 +15,14 @@ public:
 
 protected:
     void incomingConnection(qintptr socketDescriptor) override;
+    void broadcast(const QJsonObject &message, ServerWorker *exclude);
 
 signals:
     void logMessage(const QString &message);
 
 public slots:
     void stopServer();
-
+    void jsonReceived(ServerWorker *sender, const QJsonObject &docObj);
 
 
 private:
