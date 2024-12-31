@@ -33,6 +33,10 @@ private slots:
 
     void userJoined(const QString &user);
 
+    void userLefted(const QString &user);
+
+    void userListReceived(const QString &list);
+
 
 private:
     Ui::MainWindow *ui;

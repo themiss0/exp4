@@ -1,6 +1,7 @@
 #include "chatserver.h"
 #include "serverworker.h"
 #include "serverworker.h"
+#include <QJsonArray>
 
 ChatServer::ChatServer(QObject *parent):
     QTcpServer(parent)
@@ -16,6 +17,8 @@ void ChatServer::incomingConnection(qintptr socketDescriptor)
     }
     connect(worker, &ServerWorker::logMessage, this, &ChatServer::logMessage);
     connect(worker, &ServerWorker::jsonReceived, this, &ChatServer::jsonReceived);
+    connect(worker, &ServerWorker::disconnected, this, std::bind(&ChatServer::userDisconnected, this, worker));
+
     m_clients.append(worker);
     emit logMessage(("新的用户连接上了"));
 }
@@ -57,8 +60,35 @@ void ChatServer::jsonReceived(ServerWorker *sender, const QJsonObject &docObj)
         sender->setUserName(usernameVal.toString());
         QJsonObject connectedMessage;
         connectedMessage["type"] = "newuser";
-        connectedMessage["text"] = usernameVal.toString();
+        connectedMessage["username"] = usernameVal.toString();
 
         broadcast(connectedMessage, sender);
+
+        QJsonObject userListMessage;
+        userListMessage["type"] = "userlist";
+        QJsonArray userlist;
+        for(ServerWorker *worker : m_clients){
+            if(worker == sender)
+                userlist.append(worker->getUserName() + "*");
+            else
+                userlist.append(worker->getUserName());
+        }
+        userListMessage["userlist"] = userlist;
+        sender->sendJson(userListMessage);
     }
+}
+
+void ChatServer::userDisconnected(ServerWorker *sender)
+{
+    m_clients.removeAll(sender);
+    const QString userName = sender->getUserName();
+
+    if(!userName.isEmpty()){
+        QJsonObject disconnectedMessage;
+        disconnectedMessage["type"] = "userdisconnected";
+        disconnectedMessage["username"] = userName;
+        broadcast(disconnectedMessage, nullptr);
+        emit logMessage(userName + "disconnected");
+    }
+    sender->deleteLater();
 }
