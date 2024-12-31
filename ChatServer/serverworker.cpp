@@ -29,10 +29,9 @@ void ServerWorker::onReadyRead()
             emit logMessage(QString::fromUtf8((jsonData)));
             sendMessage("I recieved message");
         }else{
-
+            break;
         }
     }
-
 }
 
 void ServerWorker::sendMessage(const QString &text, const QString &type)
