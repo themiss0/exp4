@@ -35,7 +35,7 @@ private slots:
 
     void userLefted(const QString &user);
 
-    void userListReceived(const QString &list);
+    void userListReceived(const QJsonArray &list);
 
 
 private:

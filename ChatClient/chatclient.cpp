@@ -17,7 +17,7 @@ ChatClient::~ChatClient(){
         m_clientSocket->close();
     delete m_clientSocket;
 }
-
+//接收消息
 void ChatClient::onReadyRead()
 {
     QByteArray jsonData;
@@ -28,11 +28,10 @@ void ChatClient::onReadyRead()
         socketStream.startTransaction();
         socketStream >> jsonData;
         if(socketStream.commitTransaction()){
-            // emit messageReceived(QString::fromUtf8((jsonData)));
-            //在这里向界面打印输出
 
             QJsonParseError parseError;
             const QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData, &parseError);
+            //如果接收到完整消息，则发送信号
             if(jsonDoc.isObject()){
                 emit jsonReceived(jsonDoc.object());
             }
@@ -42,7 +41,7 @@ void ChatClient::onReadyRead()
     }
 
 }
-
+//发送消息
 void ChatClient::sendMessage(const QString &text, const QString &type)
 {
     if(m_clientSocket->state() != QAbstractSocket::ConnectedState){
@@ -57,10 +56,9 @@ void ChatClient::sendMessage(const QString &text, const QString &type)
         message["text"] = text;
 
         serverStream << QJsonDocument(message).toJson();
-
     }
 }
-
+//连接服务器
 void ChatClient::connectToServer(const QString &name, const QHostAddress &address, quint16 port)
 {
     try{
